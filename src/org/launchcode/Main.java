@@ -1,5 +1,6 @@
 package org.launchcode;
 
+import org.launchcode.comparators.CompoundComparator;
 import org.launchcode.comparators.NameComparator;
 import org.launchcode.comparators.PopulationComparator;
 import org.launchcode.comparators.StateComparator;
@@ -14,11 +15,18 @@ public class Main {
         ArrayList<City> cities = CityData.loadData();
 
         // TODO - Use different comparators here
-        Comparator<City> nameComparator = new NameComparator();
-        Comparator<City> populationComparator = new PopulationComparator();
-        Comparator<City> stateComparator = new StateComparator();
+        NameComparator nameComparator = new NameComparator();
+        PopulationComparator populationComparator = new PopulationComparator();
+        StateComparator stateComparator = new StateComparator();
 
-        cities.sort(populationComparator);
+        CompoundComparator compoundComparator = new CompoundComparator();
+
+        compoundComparator.addComparator(stateComparator);
+        compoundComparator.addComparator(nameComparator);
+
+
+
+        cities.sort(compoundComparator);
 
         printCities(cities);
 
